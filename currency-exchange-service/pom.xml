@@ -95,8 +95,15 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+<!--				<configuration>-->
+<!--					<image>-->
+<!--						<name>janadarakm/mscurrencyex-${project.artifactId}:${project.version}</name>-->
+<!--					</image>-->
+<!--					<pullPolicy>IF_NOT_PRESENT</pullPolicy>-->
+<!--				</configuration>-->
 			</plugin>
 		</plugins>
+	<finalName>currency-exchange</finalName>
 	</build>
 	<repositories>
 		<repository>

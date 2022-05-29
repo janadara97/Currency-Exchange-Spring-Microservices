@@ -23,21 +23,21 @@ public class CurrencyConversionController {
     CurrencyExchangeProxy currencyExchangeProxy;
 
     @GetMapping("/currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
-    public CurrencyConversion calculateCurrencyConversion(@PathVariable String from,@PathVariable String to,@PathVariable BigDecimal quantity){
-        HashMap<String,String> uriVariables=new HashMap<>();
-        uriVariables.put("from",from);
-        uriVariables.put("to",to);
-        ResponseEntity<CurrencyConversion> responseEntity=restTemplate.getForEntity("http://localhost:8000/currency-exchange/from/{from}/to/{to}",CurrencyConversion.class,uriVariables);
-        CurrencyConversion currencyConversion=responseEntity.getBody();
+    public CurrencyConversion calculateCurrencyConversion(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal quantity) {
+        HashMap<String, String> uriVariables = new HashMap<>();
+        uriVariables.put("from", from);
+        uriVariables.put("to", to);
+        ResponseEntity<CurrencyConversion> responseEntity = restTemplate.getForEntity("http://localhost:8000/currency-exchange/from/{from}/to/{to}", CurrencyConversion.class, uriVariables);
+        CurrencyConversion currencyConversion = responseEntity.getBody();
 
-      return new CurrencyConversion(1L,from,to, currencyConversion.getConversionMultiple(),quantity,quantity.multiply( currencyConversion.getConversionMultiple()), currencyConversion.getEnvironment()+" "+"Rest");
+        return new CurrencyConversion(1L, from, to, currencyConversion.getConversionMultiple(), quantity, quantity.multiply(currencyConversion.getConversionMultiple()), currencyConversion.getEnvironment() + " " + "Rest");
     }
 
     @GetMapping("/currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
-    public CurrencyConversion calculateCurrencyConversionFeign(@PathVariable String from,@PathVariable String to,@PathVariable BigDecimal quantity){
+    public CurrencyConversion calculateCurrencyConversionFeign(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal quantity) {
 
-        CurrencyConversion currencyConversion=currencyExchangeProxy.retrieveExchangeValue(from,to);
+        CurrencyConversion currencyConversion = currencyExchangeProxy.retrieveExchangeValue(from, to);
 
-        return new CurrencyConversion(1L,from,to, currencyConversion.getConversionMultiple(),quantity,quantity.multiply( currencyConversion.getConversionMultiple()), currencyConversion.getEnvironment()+" "+"feign");
+        return new CurrencyConversion(1L, from, to, currencyConversion.getConversionMultiple(), quantity, quantity.multiply(currencyConversion.getConversionMultiple()), currencyConversion.getEnvironment() + " " + "feign");
     }
 }
